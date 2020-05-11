@@ -44,7 +44,10 @@ def geturl(video):
 def homepage(request):
     if request.method == 'POST':
         yt_video = request.POST.get('hack')
-        vid_id = id_video(yt_video)
+        try:
+            vid_id = id_video(yt_video)
+        except:
+            return render(request , 'Website/404wrong.html')
         return redirect(f'http://127.0.0.1:8000/results/{vid_id}')
         
     return render(request , 'Website/index.html')
@@ -53,8 +56,10 @@ def results(request ,url):
     words = 20
     if request.method == 'POST':
         words = request.POST.get('word')
-        print(words)
     geturl(url)
     summarized = summarize1(percent=words)
     context = {'summary' : summarized.replace('\n','').title() , 'url': 'https://www.youtube.com/embed/'+url}
     return render(request , 'Website/result.html' , context)
+
+def view_404(request , *args , **kwargs):
+    return render(request , 'Website/404.html')
