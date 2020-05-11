@@ -48,7 +48,7 @@ def homepage(request):
             vid_id = id_video(yt_video)
         except:
             return render(request , 'Website/404wrong.html')
-        return redirect(f'http://127.0.0.1:8000/results/{vid_id}')
+        return redirect(f'/results/{vid_id}')
         
     return render(request , 'Website/index.html')
 
